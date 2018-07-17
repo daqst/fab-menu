@@ -1,0 +1,124 @@
+// Use Material List and Elevation styles.
+@import '@material/elevation/mixins';
+@import '@material/list/mdc-list';
+
+fab-menu {
+  position: fixed !important;
+  display: flex;
+  flex-direction: column-reverse;
+  bottom: 2rem;
+  right: 2rem;
+  align-items: flex-end;
+
+  @media (max-width: 479px) {
+    bottom:1rem;
+    right:1rem
+  }
+
+  .cta-scrum {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.28s;
+    transition-delay: 0.02s;
+    will-change: contents;
+    background-color: rgba(0,0,0,0.3);
+
+    .hidden {
+      display: none;
+    }
+  }
+
+  .cta-fab {
+    background-color: var(--fab-menu-button-bg, #5653EA);
+
+    border: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    text-decoration: none;
+    margin: 0px;
+    padding: 0px;
+    outline: none;
+    font-size: inherit;
+    font-weight: inherit;
+    position: relative;
+    vertical-align: bottom;
+    transition: all 0.28s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    height: 56px;
+    width: 56px;
+    overflow: hidden;
+    border-radius: 50%;
+    text-align: center;
+
+    @include mdc-elevation(6);
+
+    [slot='icon'] {
+      position: relative;
+      transition-property: transform, opacity;
+      transition-duration: 0.28s;
+      opacity: 1;
+      transform: rotate(0);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &:hover {
+      @include mdc-elevation(8);
+    }
+  }
+
+  .cta-list-wrapper {
+    position: absolute;
+    opacity: 0;
+    clip-path: circle(0% at 95% 95%);
+    padding: 16px;
+    transition-property: clip-path, opacity;
+    transition-duration: 0.28s;
+    bottom: -16px;
+    right: -16px;
+
+
+    ul {
+      background-color: white;
+      padding: 0;
+      @include mdc-elevation(6);
+
+      li.close {
+        cursor: pointer;
+        background-color: var(--fab-menu-button-bg, #5653EA);
+        color: black;
+      }
+    }
+  }
+
+  &[open] {
+    .cta-scrum {
+      opacity: 1;
+    }
+
+    .cta-fab {
+      width: 130px;
+      height: 48px;
+      border-radius: 0;
+      @include mdc-elevation(0);
+
+      [slot='icon'] {
+        transform: rotate(90deg);
+        opacity: 0;
+      }
+    }
+
+    .cta-list-wrapper {
+      opacity: 1;
+      clip-path: circle(100% at 55% 55%);
+    }
+  }
+}
